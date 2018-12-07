@@ -7,7 +7,7 @@ path = require('path')
 
 app.use(bodyParser.json())
 
-server = app.listen(1337)
+app.use(express.static(__dirname + '/public/dist/public'))
 
 require('./server/config/mongoose')
 
@@ -17,3 +17,4 @@ mongoose.promise = global.Promise
 var Task = mongoose.model('Task')
 
 require('./server/config/routes')(app)
+server = app.listen(1337)
