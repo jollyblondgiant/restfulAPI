@@ -8,18 +8,20 @@ import { HttpService } from './http.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'Hell, motherfucker';
+  title : String
+  tasks 
+  
   constructor(private _httpService: HttpService){
   
   }
   ngOnInit(){
-    this.getTaskByID("5c0977824612ff9b5cc8a2b0")
+    
+    this.getTasksFromService()
+    
   }
-  getTaskByID(data){
-    console.log("FUCK THIS", data)
-    let tamp = this._httpService.getTaskById(data)
-    tamp.subscribe(function(task){
-      console.log(task, "YOU'RE GONNA MAKE IT")
-    }) 
+
+  getTasksFromService(){
+    let tempObservable = this._httpService.getTasks()
+    tempObservable.subscribe( data => this.tasks = data)
   }
 }

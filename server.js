@@ -17,4 +17,4 @@ mongoose.promise = global.Promise
 var Task = mongoose.model('Task')
 
 require('./server/config/routes')(app)
-server = app.listen(1337)
+server = app.listen(4000)
