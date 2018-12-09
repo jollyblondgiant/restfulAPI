@@ -4,18 +4,19 @@
     RESTFUL TASK API
     
   </h1>
+  <div id="tasks">
+
+  <button (click)="showTasks()" >SHOW TASKS</button>
+  
+  
   <h3>TASKS:</h3>
   <ul>
-      <li *ngFor="let task of tasks">{{task.title}} : {{task.description}}</li>
- 
-
+      <li *ngFor="let task of tasks">{{task.title}} : <button (click)='getDeets(task._id)'>GET THE DEETS</button>  </li>
   </ul>
-  
-  <h3>THE FINAL TASK:</h3>
+  <h4>HERE COME THE DEETS:</h4>
+    <p>{{this.taskByID.description}}</p>
     
-    <p>{{tasks[tasks.length-1].title}} : {{tasks[tasks.length-1].description}}</p>
 
-</div>
 
 
 <router-outlet></router-outlet>
