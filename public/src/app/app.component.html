@@ -1,4 +1,4 @@
-<!--The content below is only a placeholder and can be replaced.-->
+
 <div style="text-align:center">
   <h1>
     RESTFUL TASK API
@@ -6,15 +6,34 @@
   </h1>
   <div id="tasks">
 
-  <button (click)="showTasks()" >SHOW TASKS</button>
-  
-  
+
+  <form (submit)="onSubmit()">
+    <p>{{ newTask | json }}</p>
+ <input [(ngModel)]="newTask.title" placeholder="New Task Title:" name = "newTask.title"/><br/>
+ <input [(ngModel)]="newTask.description" placeholder="New Task Description:" name = "newTask.description"/><br/>
+<input type="submit" value="create new task"/>
+</form>
+
   <h3>TASKS:</h3>
-  <ul>
-      <li *ngFor="let task of tasks">{{task.title}} : <button (click)='getDeets(task._id)'>GET THE DEETS</button>  </li>
-  </ul>
-  <h4>HERE COME THE DEETS:</h4>
-    <p>{{this.taskByID.description}}</p>
+  <button *ngIf="seeTasks == false" (click)="showTasks()" >SHOW TASKS</button>
+  <button *ngIf="seeTasks" (click)= "seeTasks = false; seeDeets = false">HIDE TASKS</button>
+  
+      <p *ngFor="let task of tasks"><span *ngIf="seeTasks">{{task.title}} : </span> <button *ngIf="seeTasks" (click)='getDeets(task._id)'>GET THE DEETS</button>  <p>
+  
+  <h4 *ngIf="seeTasks && seeDeets">HERE COME THE DEETS:</h4>
+    <p *ngIf="seeDeets">{{this.taskByID.description}}</p>
+    <button *ngIf="seeDeets" (click)="seeDeets = false; upDeets = false">HIDE THE DEETS</button>
+    <button *ngIf="seeDeets" (click)="this.upDeets = true">EDIT TASK</button>
+    <button *ngIf="seeDeets" (click)="deleteTask()">FORSAKE TASK</button>
+  
+    <form (submit)="editTask()" *ngIf="upDeets">
+        <p>{{ updateTask | json }}</p>
+        <input [(ngModel)]="updateTask.title" placeholder="Edit Task Title:" name = "updateTask.title"/><br/>
+        <input [(ngModel)]="updateTask.description" placeholder="Edit Task Description:" name = "updateTask.description"/><br/>
+       <input type="submit" value="update task"/>
+      
+    </form>
+
     
 
 

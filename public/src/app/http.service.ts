@@ -21,5 +21,13 @@ export class HttpService {
   postToServer(num){
     return this._http.post(`/tasks`, num)
   }
-
+  addTask(newTask){
+    return this._http.post('/tasks', newTask)
+  }
+  destroyTask(task){
+    return this._http.delete(`/tasks/${task}`)
+  }
+  editTask(task, updateTask){
+    return this._http.put(`/tasks/${task}`, updateTask)
+  }
 }

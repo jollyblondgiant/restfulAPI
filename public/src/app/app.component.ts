@@ -12,36 +12,71 @@ export class AppComponent implements OnInit{
   title : String
   tasks : object
   taskByID
+  seeTasks: boolean
+  seeDeets: boolean
+  upDeets: boolean  
+  userNum: number
+  newTask: any
+  updateTask: any
+  thisTask:string
   constructor(private _httpService: HttpService){
   
   }
   ngOnInit(){
-        
+      this.seeTasks = false
+      this.upDeets = false
+      this.seeDeets = false
+      this.newTask = {
+        title: "",
+        description: ""
+      }
+      this.updateTask = {
+        title: "",
+        description: ""
+      }
   }
 
   getTasksFromService(){
     let tempObservable = this._httpService.getTasks()
     tempObservable.subscribe( data => this.tasks = data)
   }
-  do(){
-    console.log("^^^^^CLICK!^^^^^")
-  }
-  doMore(num: number) : void{
-    console.log(`CLICK WITH PARAM: ${num}`)
-    let observable = this._httpService.postToServer({data:num})
-    observable.subscribe(data => console.log("GOT DATA", data))
-  }
+  
   showTasks(){
     this.getTasksFromService()
+    this.seeTasks = true
     
     
   }
   getDeets(id){
-    console.log(`ID: ${id}`)
+    this.thisTask = id
+    this.seeDeets = true
     let observable = this._httpService.getTaskbyID(id)
     observable.subscribe(data =>{
       console.log(data)
-       this.taskByID = data})
+      this.taskByID = data})
     
+  }
+  onSubmit(){
+    console.log(this.newTask)
+    console.log(this.newTask.title)
+    let observable = this._httpService.addTask(this.newTask)
+    observable.subscribe(data => console.log("NEW TASK!", data))
+
+    console.log("NEW TASK!")
+
+  }
+  deleteTask(){
+    console.log("BALEETED", this.thisTask)
+    let observable = this._httpService.destroyTask(this.thisTask)
+    observable.subscribe(data => console.log("ALL IS DUST"))
+    this.seeDeets = false
+    
+  }
+  editTask(){
+    console.log("YOU MEDDLE WITH FATE", this.thisTask)
+    console.log(this.updateTask)
+    let observable = this._httpService.editTask(this.thisTask, this.updateTask)
+    observable.subscribe(data => console.log("IT IS DONE", data))
+    this.upDeets = false
   }
 }
