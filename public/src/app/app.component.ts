@@ -47,10 +47,10 @@ export class AppComponent implements OnInit{
     
     
   }
-  getDeets(id){
-    this.thisTask = id
+  getDeets(task){
+    this.thisTask = task
     this.seeDeets = true
-    let observable = this._httpService.getTaskbyID(id)
+    let observable = this._httpService.getTaskbyID(task._id)
     observable.subscribe(data =>{
       console.log(data)
       this.taskByID = data})

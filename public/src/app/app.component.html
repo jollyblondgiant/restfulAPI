@@ -17,9 +17,12 @@
   <h3>TASKS:</h3>
   <button *ngIf="seeTasks == false" (click)="showTasks()" >SHOW TASKS</button>
   <button *ngIf="seeTasks" (click)= "seeTasks = false; seeDeets = false">HIDE TASKS</button>
-  
-      <p *ngFor="let task of tasks"><span *ngIf="seeTasks">{{task.title}} : </span> <button *ngIf="seeTasks" (click)='getDeets(task._id)'>GET THE DEETS</button>  <p>
-  
+
+  <div *ngFor="let task of tasks" class="tasks">
+      <p *ngIf="seeTasks">{{task.title}}  </p> 
+      <button *ngIf="seeTasks" (click)='getDeets(task)'>GET THE DEETS</button>  
+  </div>
+
   <h4 *ngIf="seeTasks && seeDeets">HERE COME THE DEETS:</h4>
     <p *ngIf="seeDeets">{{this.taskByID.description}}</p>
     <button *ngIf="seeDeets" (click)="seeDeets = false; upDeets = false">HIDE THE DEETS</button>
@@ -35,6 +38,9 @@
     </form>
 
     
+
+  <h1>-------!!!!!!!!!!!!!!!!!!!!-------</h1>
+  <app-task *ngIf="thisTask" [currentTask]="thisTask"></app-task>
 
 
 
